@@ -2,9 +2,9 @@
 
 A desktop app and modloader for Gimkit.
 
-# Is this allowed?
+# Is this allowed on Gimkit?
 
-**Yes, as long as you limit your usage of this to only your own live games.**
+According to the Gimkit team, **it's allowed as long as you limit your usage of this to only your own live games.**
 
 # How do I make a mod?
 
