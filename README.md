@@ -6,6 +6,12 @@ A desktop app and modloader for Gimkit.
 
 **Yes, as long as you limit your usage of this to only your own live games.**
 
+# How do I make a mod?
+
+While it is technically possible to write a Gimhook mod manually, the recommended way to do it is via the Gimhook SDK.
+
+Read [this](sdk/README.md) for more information.
+
 # How does this work?
 
 In modern JavaScript, there are modules which can be defined and later imported.
