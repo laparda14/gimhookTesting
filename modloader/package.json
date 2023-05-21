@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "typecheck": "tsc",
-    "build": "esbuild src/index.ts --bundle --platform=browser --format=iife --outfile=index.js",
+    "build": "esbuild src/index.ts --bundle --minify --platform=browser --format=iife --outfile=index.js",
     "dist": "npm run typecheck && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
