@@ -1,0 +1,36 @@
+{
+  "name": "@gimhook/desktop",
+  "version": "0.0.1",
+  "description": "A desktop app and modloader for Gimkit.",
+  "main": "app/index.js",
+  "scripts": {
+    "typecheck": "tsc",
+    "build-desktop": "esbuild src/index.ts --bundle --minify --platform=node --format=esm --external:electron --outfile=app/index.js",
+    "build": "cd ../modloader; npm run build && cd ../desktop; cat ../modloader/index.js > app/modloader.js; npm run build-desktop",
+    "start": "electron .",
+    "dist": "npm run typecheck && npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gimhook/gimhook.git"
+  },
+  "keywords": [
+    "gimkit",
+    "electron",
+    "modloader",
+    "typescript"
+  ],
+  "author": "hexaheximal",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gimhook/gimhook/issues"
+  },
+  "homepage": "https://github.com/gimhook/gimhook#readme",
+  "devDependencies": {
+    "@types/node": "^20.2.1",
+    "electron": "^24.3.1",
+    "esbuild": "^0.17.19",
+    "typescript": "^5.0.4"
+  }
+}

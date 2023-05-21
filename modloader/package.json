@@ -1,0 +1,31 @@
+{
+  "name": "@gimhook/modloader",
+  "version": "0.0.1",
+  "description": "The core modloader for gimhook",
+  "main": "index.js",
+  "scripts": {
+    "typecheck": "tsc",
+    "build": "esbuild src/index.ts --bundle --platform=browser --format=iife --outfile=index.js",
+    "dist": "npm run typecheck && npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gimhook/gimhook.git"
+  },
+  "keywords": [
+    "gimkit",
+    "modloader",
+    "typescript"
+  ],
+  "author": "hexaheximal",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gimhook/gimhook/issues"
+  },
+  "homepage": "https://github.com/gimhook/gimhook#readme",
+  "devDependencies": {
+    "esbuild": "^0.17.19",
+    "typescript": "^5.0.4"
+  }
+}
