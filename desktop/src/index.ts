@@ -1,8 +1,5 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
-const fs = require('fs');
-
-const modloader = fs.readFileSync(path.join(__dirname, "modloader.js"));
 
 if (process.env.HTTP_PROXY) {
 	app.commandLine.appendSwitch("proxy-server", process.env.HTTP_PROXY);
