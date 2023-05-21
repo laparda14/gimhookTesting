@@ -1,0 +1,36 @@
+{
+  "name": "create-gimhook",
+  "version": "0.0.1",
+  "description": "A simple tool for bootstrapping a Gimhook mod.",
+  "main": "index.js",
+  "bin": "index.js",
+  "scripts": {
+    "build": "esbuild src/index.ts --bundle --minify --banner:js=\"#!/usr/bin/env node\" --external:@inquirer/prompts --external:nanospinner --platform=node --format=cjs --outfile=index.js",
+    "dist": "tsc && npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gimhook/gimhook.git"
+  },
+  "keywords": [
+    "gimkit",
+    "modloader",
+    "typescript"
+  ],
+  "author": "hexaheximal",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gimhook/gimhook/issues"
+  },
+  "homepage": "https://github.com/gimhook/gimhook#readme",
+  "devDependencies": {
+    "@types/node": "^20.2.2",
+    "esbuild": "^0.17.19",
+    "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "@inquirer/prompts": "^1.2.2",
+    "nanospinner": "^1.1.0"
+  }
+}

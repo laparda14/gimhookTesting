@@ -1,0 +1,35 @@
+{
+  "name": "gimhook",
+  "version": "0.0.1",
+  "description": "The core package of the Gimhook SDK.",
+  "main": "index.js",
+  "bin": "index.js",
+  "scripts": {
+    "build": "esbuild src/index.ts --bundle --minify --banner:js=\"#!/usr/bin/env node\" --external:esbuild --external:nanospinner --platform=node --format=cjs --outfile=index.js",
+    "dist": "tsc && npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gimhook/gimhook.git"
+  },
+  "keywords": [
+    "gimkit",
+    "modloader",
+    "typescript"
+  ],
+  "author": "hexaheximal",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gimhook/gimhook/issues"
+  },
+  "homepage": "https://github.com/gimhook/gimhook#readme",
+  "dependencies": {
+    "esbuild": "^0.17.19",
+    "nanospinner": "^1.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.2.1",
+    "typescript": "^5.0.4"
+  }
+}

@@ -1,0 +1,9 @@
+{
+	"compilerOptions": {
+		"target": "ES2022",
+		"types": ["node"],
+		"moduleResolution": "node",
+		"skipLibCheck": true,
+		"noEmit": true
+	}
+}
