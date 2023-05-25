@@ -70,7 +70,7 @@ async function main() {
 		main: useTypescript ? "src/index.ts" : "src/index.js",
 		scripts: {
 			build: "gimhook build",
-			dist: useTypescript ? "tsc && gimhook build --production" : "gimhook build --production",
+			dist: `gimhook build --production${useTypescript ? " --typecheck" : ""}`,
 			test: "echo \"Error: no test specified\" && exit 1"
 		},
 		author,
