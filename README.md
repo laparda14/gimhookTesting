@@ -10,11 +10,9 @@ Read [the SDK documentation](sdk/README.md) for more information.
 
 # Is this allowed on Gimkit?
 
-According to the Gimkit team (although this is not an exact quote), **it's allowed as long as you limit your usage of this to only your own live games.**
+The simplified answer is **yes, as long as you don't use it to cheat or otherwise do anything potentially problematic.**
 
-However, **do not take this too definitively** - They could've misinterpreted what I described gimhook as.
-
-It is also possible that in the future it could trigger the client-side cheat detector, although that's unlikely to happen unless Gimkit specifically decides to try detecting gimhook.
+Special thanks to Josh Feinsilber and Jeff Osborn for answering this question!
 
 # How does this work?
 
