@@ -4,6 +4,8 @@ This is the SDK for Gimhook. It contains everything that you need to make and pu
 
 # How do I use it?
 
+(Remember: This is only officially supported on linux; other platforms might not work, and I'm not able to test this on other platforms so I can't properly fix it if it's broken on another platform)
+
 First of all, you need Node.js installed. Install Node.js if you don't already have it.
 
 Then, create a new directory and run `npm init gimhook@latest` inside of it to bootstrap a new mod.
