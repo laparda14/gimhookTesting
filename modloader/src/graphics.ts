@@ -61,7 +61,7 @@ function setupGraphics() {
 		return gimhook.graphics.phaserInstance.scene.cameras.cameras[0];
 	};
 
-	gimhook.graphics.camera.getZoom = (zoom) => {
+	gimhook.graphics.camera.getZoom = () => {
 		phaserCheck();
 		return gimhook.graphics.camera.getCamera().zoom;
 	};
