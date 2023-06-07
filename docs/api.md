@@ -10,7 +10,7 @@ If you need to use React, it's included in the global scope - You can just use t
 
 Module: `core`  
 Type: `Function`  
-Input type: `string`  
+Input type: `string` (name)  
 Output type: `string[]`  
 
 `gimhook.getHooks` is used to get all of the hook callbacks, given a hook name.
@@ -19,10 +19,12 @@ Output type: `string[]`
 
 Module: `core`  
 Type: `Function`  
-Input type: `string`, `Function`   
+Input type: `string` (name), `Function` (callback)   
 Output type: N/A  
 
 `gimhook.addHook` is used to add a callback function to a hook, which is called whenever the hook is triggered.
+
+See [the documentation page on hooks](hooks.md) for more information.
 
 ## gimhook.game.isGameActive
 
@@ -64,7 +66,7 @@ Output type: Position (I don't know the TypeScript type for it)
 
 Module: `core`  
 Type: `Function`  
-Input type: `number`, `number`  
+Input type: `number` (x), `number` (y)  
 Output type: N/A  
 
 `gimhook.graphics.player.setPosition` is used to set the position of the currently active player.  
@@ -93,7 +95,7 @@ Output type: `number`
 
 Module: `core`  
 Type: `Function`  
-Input type: `number`  
+Input type: `number` (zoom)  
 Output type: N/A  
 
 `gimhook.graphics.camera.setZoom` is used to set the zoom value of the currently active camera.
