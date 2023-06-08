@@ -11,8 +11,8 @@ if (process.env.HTTPS_PROXY) {
 
 const createWindow = () => {
 	const window = new BrowserWindow({
-		width: 1920,
-		height: 1080,
+		width: 1280,
+		height: 720,
 		title: "Gimhook",
 		webPreferences: {
 			contextIsolation: false, // We need to disable context isolation so that gimhook will actually work
