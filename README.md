@@ -4,7 +4,7 @@ A desktop app and modloader for Gimkit.
 
 # How do I use this?
 
-Currently, there are no autobuilds of Gimhook - you need to compile it yourself.
+Currently, there aren't any CI builds - you'll need to compile Gimhook yourself if you want to use it.
 
 Doing that is really simple though:
 
