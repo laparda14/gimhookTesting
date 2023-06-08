@@ -2,6 +2,18 @@
 
 A desktop app and modloader for Gimkit.
 
+# How do I use this?
+
+Currently, there are no autobuilds of Gimhook - you need to compile it yourself.
+
+Doing that is really simple though:
+
+1. Install Node.JS if you don't already have it
+2. Download this repository with `git clone` and enter it (**DO NOT** download a zip file for this repository from github - it won't work)
+3. Run `./scripts/build.sh` to build the desktop app
+4. Run `./scripts/run.sh` to run the desktop app
+5. Profit.
+
 # How do I make a mod?
 
 While it is technically possible to write a Gimhook mod manually, the recommended way to do it is via the work-in-progress Gimhook SDK.
