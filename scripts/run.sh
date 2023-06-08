@@ -2,6 +2,6 @@
 
 cd desktop
 
-npm run start
+npx electron . $@
 
 cd ..
