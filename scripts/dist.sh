@@ -9,7 +9,7 @@ then
 	npm i
 fi
 
-npm run build
+npm run dist
 
 cd ..
 
@@ -22,6 +22,6 @@ then
 	npm i
 fi
 
-npm run build
+npm run dist
 
 cd ..

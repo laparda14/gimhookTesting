@@ -1,8 +1,21 @@
 #!/bin/sh
 
-echo "Building modloader..."
+echo "Building SDK..."
 
-cd modloader
+cd sdk/packages
+
+cd gimhook
+
+if [ ! -d node_modules ]
+then
+	npm i
+fi
+
+npm run build
+
+cd ..
+
+cd create-gimhook
 
 if [ ! -d node_modules ]
 then
@@ -13,15 +26,4 @@ npm run build
 
 cd ..
 
-echo "Building desktop app..."
-
-cd desktop
-
-if [ ! -d node_modules ]
-then
-	npm i
-fi
-
-npm run build
-
-cd ..
+cd ../..

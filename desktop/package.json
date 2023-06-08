@@ -5,8 +5,7 @@
   "main": "app/index.js",
   "scripts": {
     "typecheck": "tsc",
-    "build-desktop": "esbuild src/index.ts --bundle --minify --platform=node --format=esm --external:electron --outfile=app/index.js",
-    "build": "npm run build-desktop; cd ../modloader; npm run build && cd ../desktop; cp ../modloader/index.js app/modloader.js",
+    "build": "esbuild src/index.ts --bundle --minify --platform=node --format=esm --external:electron --outfile=app/index.js; cp ../modloader/index.js app/modloader.js",
     "start": "electron .",
     "dist": "npm run typecheck && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
