@@ -1,11 +1,11 @@
 {
-  "name": "web",
+  "name": "@gimhook/ui",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build --base ./ --outDir=../app/web --emptyOutDir",
+    "build": "vite build --base ./ --outDir=../desktop/app/ui --emptyOutDir",
     "dist": "tsc && npm run build",
     "preview": "vite preview"
   },

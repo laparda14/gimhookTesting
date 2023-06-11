@@ -1,4 +1,4 @@
-import { Center, Heading, Text, Button } from '@chakra-ui/react';
+import { Center, Heading, Button } from '@chakra-ui/react';
 import { useState } from 'preact/hooks';
 
 // From Feather (because feather is an awesome icon library!)

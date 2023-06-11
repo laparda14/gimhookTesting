@@ -51,7 +51,7 @@ const createWindow = () => {
 		window.openDevTools();
 	}
 
-	window.loadFile(path.join(__dirname, "./web/index.html"));
+	window.loadFile(path.join(__dirname, "./ui/index.html"));
 };
 
 app.whenReady().then(() => {
