@@ -1,13 +1,13 @@
 {
-  "name": "@gimhook/desktop",
+  "name": "gimhook",
   "version": "0.0.1",
   "description": "A desktop app and modloader for Gimkit.",
   "main": "app/index.js",
   "scripts": {
-    "typecheck": "tsc",
-    "build": "esbuild src/index.ts --bundle --minify --platform=node --format=esm --external:electron --outfile=app/index.js; cp ../modloader/index.js app/modloader.js",
+    "build-web": "cd web; npm run build; cd ..",
+    "build": "esbuild src/index.ts --bundle --minify --platform=node --format=esm --external:electron --outfile=app/index.js && npm run build-web; cp ../modloader/index.js app/modloader.js",
     "start": "electron .",
-    "dist": "npm run typecheck && npm run build",
+    "dist": "tsc && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

@@ -1,5 +1,14 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
+const fs = require('fs');
+
+const gimhookDirectory = path.join(app.getPath("appData"), "gimhook");
+
+// Create the gimhook directory if it doesn't already exist.
+
+if (!fs.existsSync(gimhookDirectory)) {
+	fs.mkdirSync(gimhookDirectory);
+}
 
 let debugMode = false;
 
@@ -42,7 +51,7 @@ const createWindow = () => {
 		window.openDevTools();
 	}
 
-	window.loadURL("https://gimkit.com/me");
+	window.loadFile(path.join(__dirname, "./web/index.html"));
 };
 
 app.whenReady().then(() => {
