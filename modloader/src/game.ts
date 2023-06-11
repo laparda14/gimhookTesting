@@ -24,37 +24,12 @@ function setupGame() {
 
 		delete moduleObject.exports.OnJoinedRoom;
 
-		moduleObject.exports.OnJoinedRoom = async (data) => {
+		moduleObject.exports.OnJoinedRoom = async (colyseusInstance) => {
 			// Set the instance variable
 
-			gimhook.game.colyseusInstance = data;
+			colyseusInstance.room.onMessage("*", (a, b) => {console.log(a, b)});
 
-			// Hook onto message events
-			// Currently broken, no idea why.
-			// TODO: Fix this.
-
-			gimhook.game.colyseusInstance.room._onMessage = gimhook.game.colyseusInstance.room.onMessage;
-
-			delete gimhook.game.colyseusInstance.room.onMessage;
-
-			gimhook.game.colyseusInstance.room.onMessage = (name, data) => {
-				// Handle message hooks
-
-				let hooks = gimhook.getHooks("message");
-			
-				for (let i = 0; i < hooks.length; i++) {
-					// We do some sort of handle/fallback thing here.
-					// If the hook returns true, we skip other hooks as well as the default handlers.
-
-					if (hooks[i](name, data)) {
-						return;
-					}
-				}
-
-				// Run the original event handler
-
-				gimhook.game.colyseusInstance.room._onMessage(name, data);
-			};
+			gimhook.game.colyseusInstance = colyseusInstance;
 
 			// Set is2DGamemode to true
 
