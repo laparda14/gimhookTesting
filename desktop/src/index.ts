@@ -40,11 +40,16 @@ const createWindow = () => {
 		width: 1280,
 		height: 720,
 		title: "Gimhook",
+		show: false,
 		webPreferences: {
 			contextIsolation: false, // We need to disable context isolation so that gimhook will actually work
 			preload: path.join(__dirname, "modloader.js")
 		}
 	});
+
+	setTimeout(() => {
+		window.show();
+	}, 500);
 
 	ipcMain.on("open-external", (event, url) => {
 		shell.openExternal(url);
