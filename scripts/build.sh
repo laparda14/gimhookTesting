@@ -23,6 +23,15 @@ cd ..
 
 echo "Building desktop app..."
 
+cd ui
+
+if [ ! -d node_modules ]
+then
+	npm i
+fi
+
+cd ..
+
 cd desktop
 
 if [ ! -d node_modules ]

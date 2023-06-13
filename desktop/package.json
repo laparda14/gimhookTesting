@@ -4,12 +4,13 @@
   "description": "A desktop app and modloader for Gimkit.",
   "main": "app/index.js",
   "scripts": {
-    "build-web": "cd ../ui; npm run dist; cd ../desktop",
-    "build": "esbuild src/index.ts --bundle --minify --platform=node --format=esm --external:electron --outfile=app/index.js && npm run build-web; cp ../modloader/index.js app/modloader.js",
+    "build-ui": "cd ../ui; npm run build; cd ../desktop",
+    "dist-ui": "cd ../ui; npm run dist; cd ../desktop",
+    "build": "esbuild src/index.ts --bundle --minify --platform=node --format=esm --external:electron --outfile=app/index.js",
     "start": "electron .",
     "dist-linux": "electron-packager . gimhook --asar --out=dist --platform=linux --arch=x64 --ignore=\"(src*|tsconfig.json|.gitignore|scripts*|dist*)\"",
     "dist-windows": "electron-packager . gimhook --asar --out=dist --platform=win32 --ignore=\"(src*|tsconfig.json|.gitignore|scripts*|dist*)\"",
-    "dist": "tsc && npm run build && npm run dist-linux && npm run dist-windows",
+    "dist": "tsc && npm run dist-ui && npm run build && npm run dist-linux && npm run dist-windows",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
