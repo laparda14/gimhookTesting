@@ -11,7 +11,7 @@ function setupGraphics() {
 
 	gimhook.graphics = {camera: {}, player: {}};
 
-	// Then, Use the require() hook to expose the phaser instance (not the main Phaser object, that's already global)
+	// Then, use a require() hook to expose the phaser instance (not the main Phaser object, that's already global)
 
 	gimhook.addHook("require", (moduleObject) => {
 		if (typeof moduleObject.exports !== "object") {
