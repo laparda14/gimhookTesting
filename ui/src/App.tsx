@@ -1,5 +1,5 @@
-import { Center, Text, Button } from '@chakra-ui/react';
-import { useState } from 'preact/hooks';
+import { Center, Text, Button, ScaleFade } from '@chakra-ui/react';
+import { useState, useEffect } from 'preact/hooks';
 import './styles/index.css';
 
 // From Feather (because feather is an awesome icon library!)
@@ -10,11 +10,31 @@ function BackArrow() {
 
 export function App() {
 	const [screen, setScreen] = useState<string>("main");
+	const [visible, setVisible] = useState(false);
+
+	// Smooth screen transitions, just because it looks nice :)
+
+	const changeScreen = (name: string) => {
+		setVisible(false);
+
+		setTimeout(() => {
+			setScreen(name);
+			setVisible(true);
+		}, 500);
+	};
+
+	useEffect(() => {
+		setTimeout(() => {
+			setVisible(true);
+		}, 500);
+	}, []);
+
+	// UI stuff...
 
 	const ModsScreen = () => {
 		return (
 			<>
-				<Button onClick={() => {setScreen("main")}} style={{marginTop: 8, marginLeft: 8}}><BackArrow />Back</Button>
+				<Button onClick={() => {changeScreen("main")}} style={{marginTop: 8, marginLeft: 8}}><BackArrow />Back</Button>
 
 				<Center style={{marginTop: 32}}>
 					<Text fontSize="64px">Mods</Text>
@@ -43,7 +63,7 @@ export function App() {
 				</Center>
 	
 				<Center style={{marginTop: 16}}>
-					<Button onClick={() => {setScreen("mods")}}>Mods</Button>
+					<Button onClick={() => {changeScreen("mods")}}>Mods</Button>
 				</Center>
 			</>
 		)
@@ -56,5 +76,9 @@ export function App() {
 
 	const ScreenComponent: any = screens[screen];
 
-	return <ScreenComponent />;
+	return (
+		<ScaleFade in={visible} animateOpacity>
+			<ScreenComponent />
+		</ScaleFade>
+	);
 }
