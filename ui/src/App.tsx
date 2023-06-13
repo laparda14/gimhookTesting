@@ -1,5 +1,6 @@
-import { Center, Heading, Button } from '@chakra-ui/react';
+import { Center, Text, Heading, Button } from '@chakra-ui/react';
 import { useState } from 'preact/hooks';
+import './styles/index.css';
 
 // From Feather (because feather is an awesome icon library!)
 
@@ -30,7 +31,7 @@ export function App() {
 		return (
 			<>
 				<Center style={{marginTop: 32}}>
-					<Heading>Gimhook</Heading>
+					<Text fontSize="64px" style={{fontFamily: "Gidolinya"}}>gimhook</Text>
 				</Center>
 	
 				<Center style={{marginTop: 32}}>
