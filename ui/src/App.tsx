@@ -1,4 +1,4 @@
-import { Center, Text, Heading, Button } from '@chakra-ui/react';
+import { Center, Text, Button } from '@chakra-ui/react';
 import { useState } from 'preact/hooks';
 import './styles/index.css';
 
@@ -17,10 +17,10 @@ export function App() {
 				<Button onClick={() => {setScreen("main")}} style={{marginTop: 8, marginLeft: 8}}><BackArrow />Back</Button>
 
 				<Center style={{marginTop: 32}}>
-					<Heading>Mods</Heading>
+					<Text fontSize="64px">Mods</Text>
 				</Center>
 
-				<Center style={{marginTop: 32}}>
+				<Center style={{marginTop: 16}}>
 					<Button onclick={(globalThis as any).gimhook.openModSelectionDialog}>Install</Button>
 				</Center>
 			</>
