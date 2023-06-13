@@ -4,9 +4,8 @@
   "description": "The core modloader for gimhook",
   "main": "index.js",
   "scripts": {
-    "typecheck": "tsc",
-    "build": "esbuild src/index.ts --bundle --minify --platform=browser --format=iife --outfile=../desktop/app/modloader.js",
-    "dist": "npm run typecheck && npm run build",
+    "build": "esbuild src/index.ts --bundle --minify --platform=browser --format=iife --external:electron --outfile=../desktop/app/modloader.js",
+    "dist": "tsc && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -25,6 +24,7 @@
   },
   "homepage": "https://github.com/gimhook/gimhook#readme",
   "devDependencies": {
+    "electron": "^25.1.0",
     "esbuild": "^0.17.19",
     "typescript": "^5.0.4"
   }

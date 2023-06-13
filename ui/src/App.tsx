@@ -20,7 +20,7 @@ export function App() {
 				</Center>
 
 				<Center style={{marginTop: 32}}>
-					<Button>Install</Button>
+					<Button onclick={(globalThis as any).gimhook.openModSelectionDialog}>Install</Button>
 				</Center>
 			</>
 		)

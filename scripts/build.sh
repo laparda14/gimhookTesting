@@ -30,6 +30,8 @@ then
 	npm i
 fi
 
+npm run build
+
 cd ..
 
 cd desktop

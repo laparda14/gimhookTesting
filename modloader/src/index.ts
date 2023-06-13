@@ -9,15 +9,34 @@ import setupGraphics from './graphics';
 
 declare var gimhook: any;
 
+globalThis.gimhook = {
+	_finishedLoadingGimhook: false
+}
+
 console.log("=== Gimhook v0.0.1 ===");
 
 // do some electron-specific stuff if we're using electron
 
+gimhook.openModSelectionDialog = () => {};
+
 if (navigator.userAgent.includes("gimhook")) {
+	const { ipcRenderer } = require('electron');
+
 	// On the electron app, we need to overwrite window.open so it doesn't open a new electron window when you click things on the Gimkit dashboard.
 	// @ts-ignore
 	window.open = (url: string) => {
+		// if the URL is external, open it in a new browser window
+
+		if (new URL(url).host !== "gimkit.com") {
+			ipcRenderer.send("open-external", url);
+			return;
+		}
+
 		location.href = url;
+	}
+
+	gimhook.openModSelectionDialog = () => {
+		ipcRenderer.send("select-mods");
 	}
 }
 

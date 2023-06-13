@@ -3,10 +3,7 @@ declare var gimhook: any;
 function setupCore() {
 	// Create the core gimhook stuff
 
-	globalThis.gimhook = {
-		_hooks: {},
-		_finishedLoadingGimhook: false
-	};
+	gimhook._hooks = {};
 
 	function getHooks(type: string) {
 		if (!(type in gimhook._hooks)) {

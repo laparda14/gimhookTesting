@@ -1,13 +1,18 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, shell, BrowserWindow, ipcMain, dialog } = require('electron');
 const path = require('path');
 const fs = require('fs');
 
 const gimhookDirectory = path.join(app.getPath("appData"), "gimhook");
+const gimhookModDirectory = path.join(gimhookDirectory, "mods");
 
-// Create the gimhook directory if it doesn't already exist.
+// Create the gimhook directories if they don't already exist.
 
 if (!fs.existsSync(gimhookDirectory)) {
 	fs.mkdirSync(gimhookDirectory);
+}
+
+if (!fs.existsSync(gimhookModDirectory)) {
+	fs.mkdirSync(gimhookModDirectory);
 }
 
 let debugMode = false;
@@ -39,6 +44,24 @@ const createWindow = () => {
 			contextIsolation: false, // We need to disable context isolation so that gimhook will actually work
 			preload: path.join(__dirname, "modloader.js")
 		}
+	});
+
+	ipcMain.on("open-external", (event, url) => {
+		shell.openExternal(url);
+	});
+
+	ipcMain.on("select-mods", async (event) => {
+		const response = await dialog.showOpenDialog({ properties: ["openFile", "multiSelections"] });
+
+		if (response.canceled) {
+			console.info("Gimhook: Mod selection cancelled");
+			return;
+		}
+
+		response.filePaths.forEach(filename => {
+			fs.copyFileSync(filename, path.join(gimhookModDirectory, path.basename(filename)));
+			console.info(`Gimhook: Installed ${filename}`);
+		});
 	});
 
 	window.on("page-title-updated", (e) => {

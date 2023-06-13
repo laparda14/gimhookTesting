@@ -30,6 +30,8 @@ then
 	npm i
 fi
 
+npm run dist
+
 cd ..
 
 cd desktop
