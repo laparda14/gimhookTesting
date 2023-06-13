@@ -11,26 +11,14 @@ const tsconfigTemplate = `{
 	}
 }`;
 
-const javascriptTemplate = `// Put your require() calls here.
-// Note that you can't access modules from Gimkit's JavaScript bundle using require() in your mod, as Gimhook mods use a separate bundler.
-
-// This is the main mod code, replace this with whatever you want to add to your mod.
-
-gimhook.addHook("join", () => {
-	console.log("Game joined!");
+const javascriptTemplate = `gimhook.onJoin(() => {
+	console.log("example");
 });`;
 
-const typescriptTemplate = `// Put your require() calls here.
-// Note that you can't access modules from Gimkit's JavaScript bundle using require() in your mod, as Gimhook mods use a separate bundler.
+const typescriptTemplate = `declare var gimhook: any;
 
-// First of all, we need to tell TypeScript about the existence of the gimhook variable, or it will throw a lot of errors when typechecking.
-
-declare var gimhook: any;
-
-// This is the main mod code, replace this with whatever you want to add to your mod.
-
-gimhook.addHook("join", () => {
-	console.log("Game joined!");
+gimhook.onJoin(() => {
+	console.log("example");
 });`;
 
 async function main() {

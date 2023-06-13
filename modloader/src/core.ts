@@ -41,6 +41,12 @@ function setupCore() {
 
 	gimhook.getHooks = getHooks;
 	gimhook.addHook = addHook;
+	
+	// A synonym for gimhook.addHook("join", handler)
+	
+	gimhook.onJoin = (handler) => {
+		gimhook.addHook("join", handler);
+	};
 }
 
 export default setupCore;

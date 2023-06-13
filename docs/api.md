@@ -26,6 +26,15 @@ Output type: N/A
 
 See [the documentation page on hooks](hooks.md) for more information.
 
+## gimhook.onJoin
+
+Module: `core`  
+Type: `Function`  
+Input type: `Function` (callback)   
+Output type: N/A  
+
+`gimhook.onJoin(handler)` is a synonym for `gimhook.addHook("join", handler)`.
+
 ## gimhook.game.isGameActive
 
 Module: `game`  
