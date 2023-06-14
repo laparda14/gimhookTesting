@@ -92,7 +92,7 @@ const createWindow = () => {
 		// Don't allow mods to trigger mod-manager-related events
 
 		if (!window.webContents.getURL().startsWith("file://")) {
-			console.warn("Gimhook: enable-mod event triggered, but this isn't the gimhook UI. THIS SHOULD NEVER HAPPEN!");
+			console.warn("Gimhook: disable-mod event triggered, but this isn't the gimhook UI. THIS SHOULD NEVER HAPPEN!");
 			return;
 		}
 
