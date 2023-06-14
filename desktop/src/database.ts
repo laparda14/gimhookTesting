@@ -1,4 +1,5 @@
 const { app } = require('electron');
+const { log } = require('./logging');
 const fs = require('fs');
 const path = require('path');
 
@@ -20,7 +21,7 @@ export function rebuildPreload() {
 	// This works by concatenating all of the mods to the end of the base modloader.
 	// It actually works surprisingly well!
 
-	console.info("Gimhook: Rebuilding preload.js...");
+	log("info", "Rebuilding preload.js...");
 
 	let modloader = fs.readFileSync(path.join(__dirname, "modloader.js"), "utf-8");
 
@@ -34,7 +35,7 @@ export function rebuildPreload() {
 function updateDatabase() {
 	// Write the updated database to mods.json
 
-	console.info("Gimhook: Writing mods.json...");
+	log("info", "Writing mods.json...");
 
 	fs.writeFileSync(path.join(gimhookDirectory, "mods.json"), JSON.stringify(database, null, "\t"));
 
@@ -44,10 +45,10 @@ function updateDatabase() {
 }
 
 export function loadDatabase() {
-	// Create the gimhook directories if they don't already exist
+	// Create the mod directory if it doesn't already exist
 
 	if (!fs.existsSync(gimhookModDirectory)) {
-		console.log(`Gimhook: Creating ${gimhookModDirectory}`);
+		log("info", `Creating ${gimhookModDirectory}...`);
 		fs.mkdirSync(gimhookModDirectory);
 	}
 
@@ -66,7 +67,7 @@ export function installMod(window, filename) {
 	// We need to make sure that the file exists before we can do anything with it
 
 	if (!fs.existsSync(filename)) {
-		console.warn(`Gimhook: Attempted to install ${filename}, but it doesn't exist?!`);
+		log("error", `${filename} does not exist.`);
 		window.webContents.send("install-status", false, "", `${filename} does not exist.`);
 		return;
 	}
@@ -77,7 +78,7 @@ export function installMod(window, filename) {
 	const firstLine = fs.readFileSync(filename, "utf-8").split("\n")[0];
 
 	if (!firstLine.startsWith("// gimhook: {")) {
-		console.error(`Gimhook: ${filename} is not a valid mod file.`);
+		log("error", `${filename} is not a valid mod file.`);
 		window.webContents.send("install-status", false, "", `${filename} is not a valid mod file.`);
 		return;
 	}
@@ -87,7 +88,7 @@ export function installMod(window, filename) {
 	// Make sure that the mod isn't already installed
 
 	if (database.modNames.includes(metadata.name)) {
-		console.error(`Gimhook: ${metadata.name} is already installed.`);
+		log("error", `${metadata.name} is already installed.`);
 		window.webContents.send("install-status", false, "", `${metadata.name} is already installed.`);
 		return;
 	}
@@ -105,9 +106,7 @@ export function installMod(window, filename) {
 
 	updateDatabase();
 
-	// And finally, show some terminal output
-
-	console.info(`Gimhook: Installed ${filename}`);
+	log("info", `Installed ${filename}`);
 
 	window.webContents.send("install-status", true, metadata.name, "");
 	window.webContents.send("database-update", database);
@@ -117,7 +116,7 @@ export function removeMod(window: any, modName: string) {
 	// Make sure that the mod exists in the database
 
 	if (!database.modNames.includes(modName)) {
-		console.error(`Gimhook: ${modName} is not installed.`);
+		log("error", `${modName} is not installed.`);
 		window.webContents.send("remove-status", false, modName, `${modName} is not installed.`);
 		return;
 	}
@@ -130,7 +129,7 @@ export function removeMod(window: any, modName: string) {
 	const filename = path.join(gimhookModDirectory, `${modName}.js`);
 
 	if (!fs.existsSync(filename)) {
-		console.error(`Gimhook: ${modName} is in the database but doesn't exist. THIS SHOULD NEVER HAPPEN!`);
+		log("error", `${modName} is in the database but doesn't exist. THIS SHOULD NEVER HAPPEN!`);
 		window.webContents.send("remove-status", false, modName, `${modName} is in the database but doesn't exist. THIS SHOULD NEVER HAPPEN!`);
 	}
 
@@ -147,7 +146,7 @@ export function removeMod(window: any, modName: string) {
 
 	updateDatabase();
 
-	console.info(`Gimhook: Removed ${modName}`);
+	log("info", `Removed ${modName}`);
 
 	window.webContents.send("remove-status", true, modName, "");
 	window.webContents.send("database-update", database);
@@ -158,7 +157,7 @@ export function enableMod(window: any, modName: string) {
 		database.enabledMods.push(modName);
 		updateDatabase();
 		window.webContents.send("database-update", database);
-		console.log(`Gimhook: Enabled ${modName}`);
+		log("info", `Enabled ${modName}`);
 	}
 }
 
@@ -166,5 +165,5 @@ export function disableMod(window: any, modName: string) {
 	database.enabledMods = database.modNames.filter(mod => mod !== modName);
 	updateDatabase();
 	window.webContents.send("database-update", database);
-	console.log(`Gimhook: Disabled ${modName}`);
+	log("info", `Disabled ${modName}`);
 }
