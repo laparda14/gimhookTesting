@@ -26,7 +26,7 @@ function _buildStage2(sourceDirectory, production, spinner) {
 	
 	// Create the mod metadata object
 
-	let modMetadata = {name: path.basename(sourceDirectory), description: "", version: "1.0.0", author: "unknown", license: "unknown"};
+	let modMetadata = {sdkVersion: "0.0.3", production, name: path.basename(sourceDirectory), description: "", version: "1.0.0", author: "unknown", license: "unknown"};
 
 	// Safely copy metadata from package.json when possible
 
@@ -70,7 +70,7 @@ function _buildStage2(sourceDirectory, production, spinner) {
 		spinner.success({ text: "Finished!" });
 
 		if (!production) {
-			console.log("\nWARNING: This is a development build. Do not use it in production.\nIf you meant to create a production build, add the \"--production\" build flag or use \"npm run dist\" instead of \"npm run build\" if you created your project with create-gimhook.");
+			console.log("\nWARNING: This is a development build. Do not use it in production.\n\nIf you meant to create a production build, run \"npm run dist\" instead of \"npm run build\".");
 		}
 	} catch (e) {
 		spinner.error({ text: `Build error: ${e.errors[0].text}` });

@@ -75,7 +75,7 @@ async function main() {
 	// Add the Gimhook SDK if enabled
 
 	if (includeSDK) {
-		packageMetadata.devDependencies.gimhook = "^0.0.1";
+		packageMetadata.devDependencies.gimhook = "^0.0.3";
 	}
 
 	// Remove devDependencies if it does not contain anything

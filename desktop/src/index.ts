@@ -1,19 +1,6 @@
 const { app, shell, BrowserWindow, ipcMain, dialog } = require('electron');
+const { getDatabase, loadDatabase, rebuildPreload, getPreload, installMod, removeMod, disableMod, enableMod } = require('./database');
 const path = require('path');
-const fs = require('fs');
-
-const gimhookDirectory = path.join(app.getPath("appData"), "gimhook");
-const gimhookModDirectory = path.join(gimhookDirectory, "mods");
-
-// Create the gimhook directories if they don't already exist.
-
-if (!fs.existsSync(gimhookDirectory)) {
-	fs.mkdirSync(gimhookDirectory);
-}
-
-if (!fs.existsSync(gimhookModDirectory)) {
-	fs.mkdirSync(gimhookModDirectory);
-}
 
 let debugMode = false;
 
@@ -24,6 +11,9 @@ if (process.env.HTTP_PROXY) {
 if (process.env.HTTPS_PROXY) {
 	app.commandLine.appendSwitch("proxy-server", process.env.HTTPS_PROXY);
 }
+
+loadDatabase();
+rebuildPreload();
 
 process.argv.forEach(arg => {
 	if (arg === "--debug-mode") {
@@ -43,11 +33,12 @@ const createWindow = () => {
 		show: false,
 		webPreferences: {
 			contextIsolation: false, // We need to disable context isolation so that gimhook will actually work
-			preload: path.join(__dirname, "modloader.js")
+			preload: getPreload()
 		}
 	});
 
 	setTimeout(() => {
+		window.webContents.send("database-update", getDatabase());
 		window.show();
 	}, 500);
 
@@ -56,6 +47,11 @@ const createWindow = () => {
 	});
 
 	ipcMain.on("select-mods", async (event) => {
+		// Don't allow m
+		if (!window.webContents.getURL().startsWith("file://")) {
+			return;
+		}
+
 		const response = await dialog.showOpenDialog({ properties: ["openFile", "multiSelections"] });
 
 		if (response.canceled) {
@@ -64,9 +60,20 @@ const createWindow = () => {
 		}
 
 		response.filePaths.forEach(filename => {
-			fs.copyFileSync(filename, path.join(gimhookModDirectory, path.basename(filename)));
-			console.info(`Gimhook: Installed ${filename}`);
+			installMod(window, filename);
 		});
+	});
+
+	ipcMain.on("remove-mod", (event, name) => {
+		removeMod(window, name);
+	});
+
+	ipcMain.on("enable-mod", (event, name) => {
+		enableMod(window, name);
+	});
+
+	ipcMain.on("disable-mod", (event, name) => {
+		disableMod(window, name);
 	});
 
 	window.on("page-title-updated", (e) => {

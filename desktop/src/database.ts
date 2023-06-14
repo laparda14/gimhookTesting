@@ -1,0 +1,177 @@
+const { app } = require('electron');
+const fs = require('fs');
+const path = require('path');
+
+let database = {
+	files: [],
+	modNames: [],
+	enabledMods: [],
+	mods: []
+};
+
+export function getDatabase() {
+	return database;
+}
+
+const gimhookDirectory = path.join(app.getPath("appData"), "gimhook");
+const gimhookModDirectory = path.join(gimhookDirectory, "mods");
+
+export function rebuildPreload() {
+	// This works by concatenating all of the mods to the end of the base modloader.
+	// It actually works surprisingly well!
+
+	console.info("Gimhook: Rebuilding preload.js...");
+
+	let modloader = fs.readFileSync(path.join(__dirname, "modloader.js"), "utf-8");
+
+	database.enabledMods.forEach(modName => {
+		modloader += fs.readFileSync(path.join(gimhookModDirectory, `${modName}.js`), "utf-8");
+	});
+
+	fs.writeFileSync(path.join(gimhookDirectory, "preload.js"), modloader);
+}
+
+function updateDatabase() {
+	// Write the updated database to mods.json
+
+	console.info("Gimhook: Writing mods.json...");
+
+	fs.writeFileSync(path.join(gimhookDirectory, "mods.json"), JSON.stringify(database, null, "\t"));
+
+	// Rebuild preload.js
+
+	rebuildPreload();
+}
+
+export function loadDatabase() {
+	// Create the gimhook directories if they don't already exist
+
+	if (!fs.existsSync(gimhookModDirectory)) {
+		console.log(`Gimhook: Creating ${gimhookModDirectory}`);
+		fs.mkdirSync(gimhookModDirectory);
+	}
+
+	// Create preload.js if it doesn't already exist
+
+	if (!fs.existsSync(path.join(gimhookDirectory, "preload.js"))) {
+		console.log(`Gimhook: Creating ${path.join(gimhookDirectory, "preload.js")}`);
+		fs.copyFileSync(path.join(__dirname, "modloader.js"), path.join(gimhookDirectory, "preload.js"));
+	}
+
+	// If mods.json already exists, load it
+
+	if (fs.existsSync(path.join(gimhookDirectory, "mods.json"))) {
+		database = JSON.parse(fs.readFileSync(path.join(gimhookDirectory, "mods.json"), "utf-8"));
+	}
+}
+
+export function getPreload() {
+	return path.join(gimhookDirectory, "preload.js");
+}
+
+export function installMod(window, filename) {
+	// We need to make sure that the file exists before we can do anything with it
+
+	if (!fs.existsSync(filename)) {
+		console.warn(`Gimhook: Attempted to install ${filename}, but it doesn't exist?!`);
+		window.webContents.send("install-status", false, "", `${filename} does not exist.`);
+		return;
+	}
+
+	// yes, this loads the entire mod file into memory just to grab the metadata
+	// it should be fine though, mods should be ~100KB max
+
+	const firstLine = fs.readFileSync(filename, "utf-8").split("\n")[0];
+
+	if (!firstLine.startsWith("// gimhook: {")) {
+		console.error(`Gimhook: ${filename} is not a valid mod file.`);
+		window.webContents.send("install-status", false, "", `${filename} is not a valid mod file.`);
+		return;
+	}
+
+	const metadata = JSON.parse(firstLine.replace("// gimhook: ", ""));
+
+	// Make sure that the mod isn't already installed
+
+	if (database.modNames.includes(metadata.name)) {
+		console.error(`Gimhook: ${metadata.name} is already installed.`);
+		window.webContents.send("install-status", false, "", `${metadata.name} is already installed.`);
+		return;
+	}
+
+	// Copy the mod into the mods directory
+
+	fs.copyFileSync(filename, path.join(gimhookModDirectory, `${metadata.name}.js`));
+
+	// Update mods.json
+
+	database.files.push(`${metadata.name}.js`);
+	database.modNames.push(metadata.name);
+	database.enabledMods.push(metadata.name);
+	database.mods.push(metadata);
+
+	updateDatabase();
+
+	// And finally, show some terminal output
+
+	console.info(`Gimhook: Installed ${filename}`);
+
+	window.webContents.send("install-status", true, metadata.name, "");
+	window.webContents.send("database-update", database);
+}
+
+export function removeMod(window: any, modName: string) {
+	// Make sure that the mod exists in the database
+
+	if (!database.modNames.includes(modName)) {
+		console.error(`Gimhook: ${modName} is not installed.`);
+		window.webContents.send("remove-status", false, modName, `${modName} is not installed.`);
+		return;
+	}
+
+	// Make sure that the mod file exists
+	// If it doesn't exist, but is in the database, one of two things could've happened:
+	// 1. You deleted the mod file directly. Don't do that.
+	// 2. Something has gone REALLY wrong. This should never happen, and shouldn't even be possible.
+
+	const filename = path.join(gimhookModDirectory, `${modName}.js`);
+
+	if (!fs.existsSync(filename)) {
+		console.error(`Gimhook: ${modName} is in the database but doesn't exist. THIS SHOULD NEVER HAPPEN!`);
+		window.webContents.send("remove-status", false, modName, `${modName} is in the database but doesn't exist. THIS SHOULD NEVER HAPPEN!`);
+	}
+
+	// Remove the mod file
+
+	fs.rmSync(filename);
+
+	// Remove the mod from the database
+
+	database.files = database.files.filter(mod => mod !== `${modName}.js`);
+	database.modNames = database.modNames.filter(mod => mod !== modName);
+	database.enabledMods = database.modNames.filter(mod => mod !== modName);
+	database.mods = database.mods.filter(mod => mod.name !== modName);
+
+	updateDatabase();
+
+	console.info(`Gimhook: Removed ${modName}`);
+
+	window.webContents.send("remove-status", true, modName, "");
+	window.webContents.send("database-update", database);
+}
+
+export function enableMod(window: any, modName: string) {
+	if (!database.enabledMods.includes(modName) && database.modNames.includes(modName)) {
+		database.enabledMods.push(modName);
+		updateDatabase();
+		window.webContents.send("database-update", database);
+		console.log(`Gimhook: Enabled ${modName}`);
+	}
+}
+
+export function disableMod(window: any, modName: string) {
+	database.enabledMods = database.modNames.filter(mod => mod !== modName);
+	updateDatabase();
+	window.webContents.send("database-update", database);
+	console.log(`Gimhook: Disabled ${modName}`);
+}

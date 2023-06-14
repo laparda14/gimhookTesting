@@ -10,14 +10,14 @@ import setupGraphics from './graphics';
 declare var gimhook: any;
 
 globalThis.gimhook = {
-	_finishedLoadingGimhook: false
+	_finishedLoadingGimhook: false,
+	_openModSelectionDialog: () => {},
+	_onInstallStatus: (status: boolean, name: string, message: string) => {},
+	_onRemoveStatus: (status: boolean, name: string, message: string) => {},
+	_onDatabaseUpdate: (database: any) => {}
 }
 
-console.log("=== Gimhook v0.0.1 ===");
-
 // do some electron-specific stuff if we're using electron
-
-gimhook.openModSelectionDialog = () => {};
 
 if (navigator.userAgent.includes("gimhook")) {
 	const { ipcRenderer } = require('electron');
@@ -35,12 +35,36 @@ if (navigator.userAgent.includes("gimhook")) {
 		location.href = url;
 	}
 
-	gimhook.openModSelectionDialog = () => {
+	gimhook._openModSelectionDialog = () => {
 		ipcRenderer.send("select-mods");
 	}
+
+	gimhook._removeMod = (name: string) => {
+		ipcRenderer.send("remove-mod", name);
+	}
+
+	gimhook._enableMod = (name: string) => {
+		ipcRenderer.send("enable-mod", name);
+	}
+
+	gimhook._disableMod = (name: string) => {
+		ipcRenderer.send("disable-mod", name);
+	}
+
+	ipcRenderer.on("install-status", (event: Event, status: boolean, name: string, message: string) => {
+		gimhook._onInstallStatus(status, name, message);
+	});
+
+	ipcRenderer.on("remove-status", (event: Event, status: boolean, name: string, message: string) => {
+		gimhook._onRemoveStatus(status, name, message);
+	});
+
+	ipcRenderer.on("database-update", (event: Event, database: any) => {
+		gimhook._onDatabaseUpdate(database);
+	});
 }
 
-// load all of the different modules
+// load all of the gimhook modules
 
 console.log("Gimhook: loading core module...");
 
