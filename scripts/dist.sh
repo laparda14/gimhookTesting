@@ -43,4 +43,9 @@ fi
 
 npm run dist
 
-cd ..
+cd dist
+
+tar -czvf gimhook-linux-x64.tar.gz gimhook-linux-x64
+zip -r gimhook-win32-x64 gimhook-win32-x64
+
+cd ../..
