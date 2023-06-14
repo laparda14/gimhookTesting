@@ -51,13 +51,6 @@ export function loadDatabase() {
 		fs.mkdirSync(gimhookModDirectory);
 	}
 
-	// Create preload.js if it doesn't already exist
-
-	if (!fs.existsSync(path.join(gimhookDirectory, "preload.js"))) {
-		console.log(`Gimhook: Creating ${path.join(gimhookDirectory, "preload.js")}`);
-		fs.copyFileSync(path.join(__dirname, "modloader.js"), path.join(gimhookDirectory, "preload.js"));
-	}
-
 	// If mods.json already exists, load it
 
 	if (fs.existsSync(path.join(gimhookDirectory, "mods.json"))) {
