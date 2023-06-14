@@ -1,14 +1,10 @@
-# Gimhook
+# Gimhook v0.0.1
 
 A desktop app and modloader for Gimkit.
 
-# How do I use this?
+# How do I build this from source?
 
-Currently, there aren't any CI builds - you'll need to compile Gimhook yourself if you want to use it.
-
-Building on windows is currently very broken since you need git bash to run the build scripts, and once you get *that* working esbuild complains with `Must use "outdir" when there are multiple input files` while trying to build the desktop app.
-
-Doing that is really simple though:
+**NOTE: You should probably just download a release and run it. It's a lot easier.**
 
 1. Install Node.JS if you don't already have it
 2. Download this repository with `git clone` and enter it (**DO NOT** download a zip file for this repository from github - it won't work)
