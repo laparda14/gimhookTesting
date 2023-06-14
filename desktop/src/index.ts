@@ -47,8 +47,10 @@ const createWindow = () => {
 	});
 
 	ipcMain.on("select-mods", async (event) => {
-		// Don't allow m
+		// Don't allow mods to trigger mod-manager-related events
+
 		if (!window.webContents.getURL().startsWith("file://")) {
+			console.warn("Gimhook: select-mods event triggered, but this isn't the gimhook UI. THIS SHOULD NEVER HAPPEN!");
 			return;
 		}
 
@@ -65,14 +67,35 @@ const createWindow = () => {
 	});
 
 	ipcMain.on("remove-mod", (event, name) => {
+		// Don't allow mods to trigger mod-manager-related events
+
+		if (!window.webContents.getURL().startsWith("file://")) {
+			console.warn("Gimhook: remove-mod event triggered, but this isn't the gimhook UI. THIS SHOULD NEVER HAPPEN!");
+			return;
+		}
+
 		removeMod(window, name);
 	});
 
 	ipcMain.on("enable-mod", (event, name) => {
+		// Don't allow mods to trigger mod-manager-related events
+
+		if (!window.webContents.getURL().startsWith("file://")) {
+			console.warn("Gimhook: enable-mod event triggered, but this isn't the gimhook UI. THIS SHOULD NEVER HAPPEN!");
+			return;
+		}
+
 		enableMod(window, name);
 	});
 
 	ipcMain.on("disable-mod", (event, name) => {
+		// Don't allow mods to trigger mod-manager-related events
+
+		if (!window.webContents.getURL().startsWith("file://")) {
+			console.warn("Gimhook: enable-mod event triggered, but this isn't the gimhook UI. THIS SHOULD NEVER HAPPEN!");
+			return;
+		}
+
 		disableMod(window, name);
 	});
 
