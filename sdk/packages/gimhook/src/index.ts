@@ -26,7 +26,7 @@ async function _buildStage2(sourceDirectory, production, spinner) {
 	
 	// Create the mod metadata object
 
-	let modMetadata = {sdkVersion: "0.0.3", production, name: path.basename(sourceDirectory), description: "", version: "1.0.0", author: "unknown", license: "unknown"};
+	let modMetadata = {sdkVersion: "0.0.6", production, name: path.basename(sourceDirectory), description: "", version: "1.0.0", author: "unknown", license: "unknown"};
 
 	// Safely copy metadata from package.json when possible
 
