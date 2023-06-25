@@ -22,7 +22,7 @@ Read [the SDK documentation](sdk/README.md) for more information.
 
 The simplified answer is **yes, as long as you don't use it to cheat or otherwise do anything potentially problematic.**
 
-Special thanks to Josh Feinsilber and Jeff Osborn for answering this question!
+Special thanks to Josh Feinsilber and Jeff Osborn for clarifying this!
 
 # How does this work?
 
