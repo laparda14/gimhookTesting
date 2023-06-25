@@ -1,15 +1,19 @@
 import { input, confirm } from '@inquirer/prompts';
 import { createSpinner } from 'nanospinner';
-const { spawn } = require("child_process");
+const { spawn } = require('child_process');
 const path = require('path');
 const fs = require('fs');
 
-const tsconfigTemplate = `{
+const tsconfigTemplate = {
 	"compilerOptions": {
 		"target": "ES2022",
-		"noEmit": true
+		"noEmit": true,
+		"jsx": "react",
+		"paths": {
+			"react": ["./node_modules/gimhook/react"]
+		}
 	}
-}`;
+};
 
 const javascriptTemplate = `gimhook.onJoin(() => {
 	console.log("example");
@@ -55,7 +59,7 @@ async function main() {
 		name,
 		version: "1.0.0",
 		description,
-		main: useTypescript ? "src/index.ts" : "src/index.js",
+		main: useTypescript ? "src/index.tsx" : "src/index.js",
 		scripts: {
 			build: "gimhook build",
 			dist: `gimhook build --production${useTypescript ? " --typecheck" : ""}`,
@@ -122,12 +126,12 @@ async function main() {
 	// Add the code template
 
 	fs.mkdirSync(path.join(targetDirectory, "src"));
-	fs.writeFileSync(path.join(targetDirectory, useTypescript ? "src/index.ts" : "src/index.js"), useTypescript ? typescriptTemplate : javascriptTemplate);
+	fs.writeFileSync(path.join(targetDirectory, useTypescript ? "src/index.tsx" : "src/index.js"), useTypescript ? typescriptTemplate : javascriptTemplate);
 
 	// Add tsconfig.json if TypeScript is enabled
 
 	if (useTypescript) {
-		fs.writeFileSync(path.join(targetDirectory, "tsconfig.json"), tsconfigTemplate);
+		fs.writeFileSync(path.join(targetDirectory, "tsconfig.json"), JSON.stringify(tsconfigTemplate, null, "\t"));
 	}
 
 	// Install dependencies if enabled

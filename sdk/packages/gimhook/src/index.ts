@@ -1,6 +1,6 @@
 const esbuild = require('esbuild');
 const { createSpinner } = require('nanospinner');
-const { spawn } = require("child_process");
+const { spawn } = require('child_process');
 const path = require('path');
 const fs = require('fs');
 
@@ -10,7 +10,7 @@ let usageText = `Usage:
 // Internal function for the post-typecheck build stage
 // Don't use this for your own stuff, this is only meant to be used internally.
 
-function _buildStage2(sourceDirectory, production, spinner) {
+async function _buildStage2(sourceDirectory, production, spinner) {
 	// Load package.json
 
 	if (!fs.existsSync("package.json")) {
@@ -54,12 +54,15 @@ function _buildStage2(sourceDirectory, production, spinner) {
 	// TODO: use async esbuild
 
 	try {
-		esbuild.buildSync({
+		await esbuild.build({
 			entryPoints: [metadata.main],
 			bundle: true,
 			minify: production,
 			platform: "browser",
 			format: "iife",
+			alias: {
+				"react": "gimhook/react"
+			},
 			banner: {
 				js: "// gimhook: " + JSON.stringify(modMetadata)
 			},
@@ -74,13 +77,23 @@ function _buildStage2(sourceDirectory, production, spinner) {
 		}
 	} catch (e) {
 		spinner.error({ text: `Build error: ${e.errors[0].text}` });
+
+		if (e.errors[0].text === "Could not resolve \"gimhook/react\" (originally \"react\")") {
+			const explanation = `\nThis means that you are importing React using the import alias, but esbuild could not find the gimhook package in your project.
+
+There are 2 ways that you can solve this problem:
+	1. Run "npm i -D gimhook" to install the Gimhook SDK (recommended)
+	2. Use window.React directly instead of importing React`;
+
+			console.log(explanation);
+		}
 		process.exit(1);
 	}
 }
 
 // The build function.
 
-function build(sourceDirectory, production, typecheck) {
+async function build(sourceDirectory, production, typecheck) {
 	// Show a warning message if production is false and typecheck is true
 
 	if (typecheck && !production) {
@@ -198,12 +211,12 @@ function main() {
 		// If a path is specified, use that as the project directory.
 
 		if (args.length !== 1) {
-			build(path.resolve(args[1]), getArgument("production"), getArgument("typecheck"));
+			build(path.resolve(args[1]), getArgument("production"), getArgument("typecheck")).then(() => {});
 		}
 
 		// Otherwise, build the project in the current working directory.
 
-		build(process.cwd(), getArgument("production"), getArgument("typecheck"));
+		build(process.cwd(), getArgument("production"), getArgument("typecheck")).then(() => {});
 
 		return;
 	}
