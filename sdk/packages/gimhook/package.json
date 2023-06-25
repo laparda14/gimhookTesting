@@ -1,8 +1,9 @@
 {
   "name": "gimhook",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "The core package of the Gimhook SDK.",
   "main": "index.js",
+  "types": "index.d.ts",
   "bin": "index.js",
   "scripts": {
     "build": "esbuild src/index.ts --bundle --minify --banner:js=\"#!/usr/bin/env node\" --external:esbuild --external:nanospinner --platform=node --format=cjs --outfile=index.js",

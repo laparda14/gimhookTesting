@@ -9,19 +9,14 @@ const tsconfigTemplate = {
 		"target": "ES2022",
 		"noEmit": true,
 		"jsx": "react",
+		"types": ["gimhook"],
 		"paths": {
 			"react": ["./node_modules/gimhook/react"]
 		}
 	}
 };
 
-const javascriptTemplate = `gimhook.onJoin(() => {
-	console.log("example");
-});`;
-
-const typescriptTemplate = `declare var gimhook: any;
-
-gimhook.onJoin(() => {
+const modTemplate = `gimhook.onJoin(() => {
 	console.log("example");
 });`;
 
@@ -126,7 +121,7 @@ async function main() {
 	// Add the code template
 
 	fs.mkdirSync(path.join(targetDirectory, "src"));
-	fs.writeFileSync(path.join(targetDirectory, useTypescript ? "src/index.tsx" : "src/index.js"), useTypescript ? typescriptTemplate : javascriptTemplate);
+	fs.writeFileSync(path.join(targetDirectory, useTypescript ? "src/index.tsx" : "src/index.js"), modTemplate);
 
 	// Add tsconfig.json if TypeScript is enabled
 
