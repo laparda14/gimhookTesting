@@ -68,13 +68,13 @@ async function main() {
 	// Add typescript to devDependencies if enabled
 
 	if (useTypescript) {
-		packageMetadata.devDependencies.typescript = "^5.0.4";
+		packageMetadata.devDependencies.typescript = "latest";
 	}
 
 	// Add the Gimhook SDK if enabled
 
 	if (includeSDK) {
-		packageMetadata.devDependencies.gimhook = "^0.0.3";
+		packageMetadata.devDependencies.gimhook = "latest";
 	}
 
 	// Remove devDependencies if it does not contain anything
