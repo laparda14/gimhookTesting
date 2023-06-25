@@ -35,6 +35,18 @@ if (navigator.userAgent.includes("gimhook")) {
 		location.href = url;
 	}
 
+	document.addEventListener("click", (e: any) => {
+		const link = e.target.closest("a");
+
+		if (!link) {
+			return;
+		}
+
+		e.preventDefault();
+
+		window.open(link.href);
+	});
+
 	gimhook._openModSelectionDialog = () => {
 		ipcRenderer.send("select-mods");
 	}
