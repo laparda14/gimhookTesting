@@ -1,4 +1,4 @@
-# Gimhook v0.0.1
+# Gimhook
 
 A desktop app and modloader for Gimkit.
 
