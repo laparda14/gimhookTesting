@@ -2,7 +2,7 @@
 
 ## Using a pre-built version (Recommended)
 
-Download a build from [here](https://github.com/gimhook/gimhook/releases/tag/0.0.1) and run it.
+Download a build from [here](https://github.com/gimhook/gimhook/releases) and run it.
 
 It's as simple as that.
 
