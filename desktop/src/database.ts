@@ -83,7 +83,22 @@ export function installMod(window, filename) {
 		return;
 	}
 
-	const metadata = JSON.parse(firstLine.replace("// gimhook: ", ""));
+	let metadata = null;
+
+	try {
+		metadata = JSON.parse(firstLine.replace("// gimhook: ", ""));
+	} catch (e) {
+		log("error", `Failed to parse ${filename}!`);
+		window.webContents.send("install-status", false, "", `Failed to parse ${filename}!`);
+		return;
+	}
+
+	if (!("formatVersion" in metadata) || metadata.formatVersion !== 1) {
+		log("error", `${filename} does not contain a valid formatVersion value. This most likely means that the mod was made with an older SDK version.`);
+		window.webContents.send("install-status", false, "", `${filename} does not contain a valid formatVersion value. This most likely means that the mod was made with an older SDK version.`);
+		return;
+	}
+	
 
 	// Make sure that the mod isn't already installed
 
