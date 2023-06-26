@@ -1,4 +1,4 @@
-import { Center, Text, Button, ScaleFade, Card, CardBody, CardFooter, Stack, Heading, ButtonGroup, useToast, AlertDialog, AlertDialogOverlay, useDisclosure, AlertDialogContent, AlertDialogBody, AlertDialogFooter, AlertDialogHeader, Alert, AlertDescription, AlertIcon, AlertTitle } from '@chakra-ui/react';
+import { Center, Text, Button, ScaleFade, Card, CardBody, CardFooter, Stack, Heading, ButtonGroup, useToast, AlertDialog, AlertDialogOverlay, useDisclosure, AlertDialogContent, AlertDialogBody, AlertDialogFooter, AlertDialogHeader, Alert, AlertDescription, AlertIcon, AlertTitle, Link } from '@chakra-ui/react';
 import { useState, useEffect, useRef } from 'preact/hooks';
 import './styles/index.css';
 
@@ -147,6 +147,10 @@ export function App() {
 
 				<Center style={{marginTop: 32}}>
 					<Text fontSize="64px">Mods</Text>
+				</Center>
+
+				<Center style={{marginTop: 16, marginBottom: 16}}>
+					<p><b>NOTE</b>: A mod distribution system for Gimhook is coming soon, but in the meantime you can share mods on <Link href="https://discord.gg/vBHcG76KGQ" color="blue">our discord server</Link>.</p>
 				</Center>
 
 				<Center style={{marginTop: 16, marginBottom: 16}}>
