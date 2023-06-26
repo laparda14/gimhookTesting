@@ -10,16 +10,20 @@ If you want to make mods, you can find the documentation for that [here](../sdk/
 
 In modern JavaScript, there are modules which can be defined and later imported.
 
-Here's an example of a CommonJS module which we'll give the filename `add.js`:
+Here's an example of an ESM module which we'll give the filename `add.js`:
 
 ```javascript
-module.exports = (a, b) => {return a + b};
+function add(a, b) {
+	return a + b;
+}
+
+export default add;
 ```
 
 ..and here's an example of a module that uses it:
 
 ```javascript
-const add = require('./add');
+import add from './add';
 
 console.log(add(2, 2)); // 4
 ```
