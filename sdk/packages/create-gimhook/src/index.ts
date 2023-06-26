@@ -31,6 +31,8 @@ async function main() {
 	let targetDirectory: string = args.length === 1 ? path.resolve(args[0]) : cwd;
 
 	const name = await input({ message: "Project name:", default: path.basename(targetDirectory)});
+	const slug = await input({ message: "Project slug (a short version of the name with only lowercase letters, numbers, and dashes):", default: path.basename(targetDirectory).toLowerCase().replace(" ", "-")});
+	const url = await input({ message: "Project URL (blank for none):", default: ""});
 	const description = await input({ message: "Project description:", default: ""});
 	const author = await input({ message: "Author name:", default: ""});
 	const license = await input({ message: "Project license:", default: "MIT"});
@@ -50,8 +52,9 @@ async function main() {
 
 	// Create the template for package.json
 
-	let packageMetadata = {
+	let packageMetadata: any = {
 		name,
+		slug,
 		version: "1.0.0",
 		description,
 		main: useTypescript ? "src/index.tsx" : "src/index.js",
@@ -62,19 +65,24 @@ async function main() {
 		},
 		author,
 		license,
-		devDependencies: {} as any
+		devDependencies: {} as any,
+		modDependencies: {}
 	};
+
+	if (url !== "") {
+		packageMetadata.url = url;
+	}
 
 	// Add typescript to devDependencies if enabled
 
 	if (useTypescript) {
-		packageMetadata.devDependencies.typescript = "latest";
+		packageMetadata.devDependencies.typescript = "^5.1.3";
 	}
 
 	// Add the Gimhook SDK if enabled
 
 	if (includeSDK) {
-		packageMetadata.devDependencies.gimhook = "latest";
+		packageMetadata.devDependencies.gimhook = "^0.0.7";
 	}
 
 	// Remove devDependencies if it does not contain anything

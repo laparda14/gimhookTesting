@@ -26,12 +26,26 @@ async function _buildStage2(sourceDirectory, production, spinner) {
 	
 	// Create the mod metadata object
 
-	let modMetadata = {sdkVersion: "0.0.6", production, name: path.basename(sourceDirectory), description: "", version: "1.0.0", author: "unknown", license: "unknown"};
+	let modMetadata = {
+		formatVersion: 1,
+		production,
+		name: path.basename(sourceDirectory),
+		slug: path.basename(sourceDirectory).toLowerCase().replace(" ", "-"),
+		description: "",
+		version: "1.0.0",
+		author: "unknown",
+		license: "unknown",
+		dependencies: []
+	};
 
 	// Safely copy metadata from package.json when possible
 
 	if (typeof metadata.name !== "undefined" && metadata.name !== "") {
 		modMetadata.name = metadata.name;
+	}
+
+	if (typeof metadata.slug !== "undefined" && metadata.slug !== "") {
+		modMetadata.slug = metadata.slug;
 	}
 
 	if (typeof metadata.description !== "undefined" && metadata.description !== "") {
@@ -48,6 +62,10 @@ async function _buildStage2(sourceDirectory, production, spinner) {
 
 	if (typeof metadata.license !== "undefined" && metadata.license !== "") {
 		modMetadata.license = metadata.license;
+	}
+
+	if (typeof metadata.modDependencies !== "undefined" && metadata.modDependencies !== "") {
+		modMetadata.dependencies = metadata.modDependencies;
 	}
 
 	// Build the project with esbuild
@@ -97,7 +115,7 @@ async function build(sourceDirectory, production, typecheck) {
 	// Show a warning message if production is false and typecheck is true
 
 	if (typecheck && !production) {
-		console.log("WARNING: You are using typechecking on a development build.\nThis is usually not what you want as it makes it slower to build, but can be useful for debugging.");
+		console.log("WARNING: You are using typechecking on a development build.\n\nThis is usually not what you want, as it makes it slower to build.\n");
 	}
 
 	// Start the spinner

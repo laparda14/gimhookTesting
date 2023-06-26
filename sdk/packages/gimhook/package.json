@@ -1,6 +1,6 @@
 {
   "name": "gimhook",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "The core package of the Gimhook SDK.",
   "main": "index.js",
   "types": "index.d.ts",
@@ -30,7 +30,7 @@
     "nanospinner": "^1.1.0"
   },
   "devDependencies": {
-    "@types/node": "^20.2.1",
-    "typescript": "^5.0.4"
+    "@types/node": "^20.3.2",
+    "typescript": "^5.1.3"
   }
 }
