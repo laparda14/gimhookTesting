@@ -4,7 +4,9 @@ All APIs mentioned below are in the global scope.
 
 If you need to use React, it's included in the global scope - You can just use the `React` variable anywhere.
 
-**NOTE**: The Gimhook SDK currently isn't able to replace React imports in mods with a wrapper for the global variable. Please don't import it.
+~~**NOTE**: The Gimhook SDK currently isn't able to replace React imports in mods with a wrapper for the global variable. Please don't import it.~~
+
+This is no longer a problem. Feel free to import React with normal ES6 imports now!
 
 ## gimhook.getHooks
 

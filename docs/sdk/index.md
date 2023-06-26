@@ -1,9 +1,10 @@
-# Gimhook Documentation
+# Gimhook SDK Documentation
 
 **NOTE: If you just want to play mods and you don't want to make them, this is not for you.**
 
 ## Documentation Pages
 
+- [Using the Gimhook SDK](usage.md)
 - [Gimhook API](api.md)
 - [Gimhook hook types](hooks.md)
 

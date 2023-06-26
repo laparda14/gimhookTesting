@@ -2,21 +2,13 @@
 
 A desktop app and modloader for Gimkit.
 
-# How do I build this from source?
+# How do I use this?
 
-**NOTE: You should probably just download a release and run it. It's a lot easier.**
-
-1. Install Node.JS if you don't already have it
-2. Download this repository with `git clone` and enter it (**DO NOT** download a zip file for this repository from github - it won't work)
-3. Run `./scripts/build.sh` to build the desktop app
-4. Run `./scripts/run.sh` to run the desktop app
-5. Profit.
+Read [the usage documentation](docs/usage/index.md) for more information.
 
 # How do I make a mod?
 
-While it is technically possible to write a Gimhook mod manually, the recommended way to do it is via the work-in-progress Gimhook SDK.
-
-Read [the SDK documentation](sdk/README.md) for more information.
+Read [the SDK documentation](docs/sdk/index.md) for more information.
 
 # Is this allowed on Gimkit?
 
@@ -24,30 +16,8 @@ The simplified answer is **yes, as long as you don't use it to cheat or otherwis
 
 Special thanks to Josh Feinsilber and Jeff Osborn for clarifying this!
 
-# How does this work?
+# What is the correct capitalization for Gimhook?
 
-In modern JavaScript, there are modules which can be defined and later imported.
+The correct capitalization is `Gimhook`, which is used everywhere except for the logo.
 
-Here's an example of a CommonJS module which we'll give the filename `add.js`:
-
-```javascript
-module.exports = (a, b) => {return a + b};
-```
-
-..and here's an example of a module that uses it:
-
-```javascript
-const add = require('./add');
-
-console.log(add(2, 2)); // 4
-```
-
-However, modern web apps don't just use modules directly in the browser - They use a bundler to implement `require()` and bundle all of the dependencies they need into a single JavaScript file.
-
-Gimhook works by hooking onto parcel's implementation of `require()` (which Gimkit uses) and intercepting the imported modules to replace them with something else, allowing Gimkit to turn modules into global variables and inject modifications into the Gimkit web client.
-
-Think of it as replacing the add function with something entirely different when it tries to use it. ;)
-
-Also keep in mind that this is all done client-side, so it doesn't touch anything on Gimkit's servers. **Your mods only are only on your client unless you share them and someone else installs it on their client.**
-
-As for the desktop app part... that's just done with electron.
+The logo is lowercase because I personally think it looks better. I might change it later though to further standardize on using `Gimhook`.
