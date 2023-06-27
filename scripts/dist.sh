@@ -45,7 +45,28 @@ npm run dist
 
 cd dist
 
-tar -czvf gimhook-linux-x64.tar.gz gimhook-linux-x64
-zip -r gimhook-win32-x64 gimhook-win32-x64
+if [ -d Gimhook-darwin-x64 ]
+then
+	cd Gimhook-darwin-x64
+	zip -r ../gimhook-darwin-x64.zip Gimhook.app
+	cd ..
+fi
+
+if [ -d Gimhook-darwin-arm64 ]
+then
+	cd Gimhook-darwin-arm64
+	zip -r ../gimhook-darwin-arm64.zip Gimhook.app
+	cd ..
+fi
+
+if [ -d gimhook-linux-x64 ]
+then
+	tar -czvf gimhook-linux-x64.tar.gz gimhook-linux-x64
+fi
+
+if [ -d gimhook-win32-x64 ]
+then
+	zip -r gimhook-win32-x64.zip gimhook-win32-x64
+fi
 
 cd ../..

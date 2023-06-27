@@ -10,7 +10,9 @@
     "start": "electron .",
     "dist-linux": "electron-packager . gimhook --overwrite --asar --out=dist --platform=linux --arch=x64 --ignore=\"(src*|tsconfig.json|.gitignore|scripts*|dist*)\"",
     "dist-windows": "electron-packager . gimhook --overwrite --asar --out=dist --platform=win32 --ignore=\"(src*|tsconfig.json|.gitignore|scripts*|dist*)\"",
-    "dist": "tsc && npm run build && npm run dist-linux && npm run dist-windows",
+    "dist-darwin-x64": "electron-packager . Gimhook --overwrite --asar --out=dist --platform=darwin --arch=x64 --ignore=\"(src*|tsconfig.json|.gitignore|scripts*|dist*)\"",
+    "dist-darwin-arm64": "electron-packager . Gimhook --overwrite --asar --out=dist --platform=darwin --arch=arm64 --ignore=\"(src*|tsconfig.json|.gitignore|scripts*|dist*)\"",
+    "dist": "tsc && npm run build && npm run dist-linux && npm run dist-darwin-x64 && npm run dist-darwin-arm64 && npm run dist-windows",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
