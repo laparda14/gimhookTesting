@@ -20,6 +20,8 @@ globalThis.gimhook = {
 // do some electron-specific stuff if we're using electron
 
 if (navigator.userAgent.includes("gimhook")) {
+	// @ts-ignore
+	
 	const { ipcRenderer } = require('electron');
 
 	// On the electron app, we need to overwrite window.open so it doesn't open a new electron window when you click things on the Gimkit dashboard.
