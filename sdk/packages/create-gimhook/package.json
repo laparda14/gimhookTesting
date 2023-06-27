@@ -1,6 +1,6 @@
 {
   "name": "create-gimhook",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "A simple tool for bootstrapping a Gimhook mod.",
   "main": "index.js",
   "bin": "index.js",
