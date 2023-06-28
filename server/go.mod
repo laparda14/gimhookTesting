@@ -2,7 +2,10 @@ module gimhook
 
 go 1.19
 
-require github.com/gin-gonic/gin v1.9.1
+require (
+	github.com/evanw/esbuild v0.18.10
+	github.com/gin-gonic/gin v1.9.1
+)
 
 require (
 	github.com/bytedance/sonic v1.9.1 // indirect

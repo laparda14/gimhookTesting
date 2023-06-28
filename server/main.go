@@ -1,7 +1,9 @@
 package main
 
 import (
+	"gimhook/buildbot"
 	"log"
+	"os"
 
 	"github.com/gin-gonic/gin"
 )
@@ -14,6 +16,14 @@ func HeaderMiddleware() gin.HandlerFunc {
 
 func main() {
 	log.Println("Starting...")
+
+	contents, err := buildbot.Build(os.Args[1])
+
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	log.Println(contents)
 
 	// Set up gin
 
@@ -34,7 +44,9 @@ func main() {
 		})
 	})
 
-	log.Println("Ready!")
+	err = r.Run(":8080")
 
-	r.Run(":8080")
+	if err != nil {
+		log.Fatalln(err)
+	}
 }
