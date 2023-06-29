@@ -11,6 +11,7 @@ declare var gimhook: any;
 
 globalThis.gimhook = {
 	_finishedLoadingGimhook: false,
+	_shouldLoadMods: true,
 	_openModSelectionDialog: () => {},
 	_onInstallStatus: (status: boolean, name: string, message: string) => {},
 	_onRemoveStatus: (status: boolean, name: string, message: string) => {},
@@ -101,5 +102,11 @@ console.log("Gimhook: loading graphics module...");
 setupGraphics();
 
 console.log("Gimhook: Finished loading Gimhook!");
+
+// Don't load mods if this is the UI, otherwise there could be some really dangerous mods
+
+if (new URL(location.href).protocol === "file:") {
+	gimhook._shouldLoadMods = false;
+}
 
 gimhook._finishedLoadingGimhook = true;
