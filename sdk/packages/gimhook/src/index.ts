@@ -160,7 +160,14 @@ async function build(sourceDirectory, production, typecheck) {
 	});
 
 	command.on("error", () => {
-		spinner.error({ text: "Failed to find the TypeScript compiler! Please install it first!" });	
+		if (output !== "") {
+			spinner.error({ text: "Catastrophically failed in a way that shouldn't even be possible!" });
+			console.log("Here's the error log, please send this to hexaheximal:");
+			console.log(output);
+			return;
+		}
+		
+		spinner.error({ text: "Failed to find the TypeScript compiler! Please install it first!" });
 		process.exit(1);
 	});
 }
