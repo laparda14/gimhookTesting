@@ -66,7 +66,7 @@ async function main() {
 		author,
 		license,
 		devDependencies: {} as any,
-		modDependencies: {}
+		modDependencies: []
 	};
 
 	if (url !== "") {
@@ -76,13 +76,13 @@ async function main() {
 	// Add typescript to devDependencies if enabled
 
 	if (useTypescript) {
-		packageMetadata.devDependencies.typescript = "^5.1.3";
+		packageMetadata.devDependencies.typescript = "^5.1.6";
 	}
 
 	// Add the Gimhook SDK if enabled
 
 	if (includeSDK) {
-		packageMetadata.devDependencies.gimhook = "^0.0.11";
+		packageMetadata.devDependencies.gimhook = "^0.0.12";
 	}
 
 	// Remove devDependencies if it does not contain anything
