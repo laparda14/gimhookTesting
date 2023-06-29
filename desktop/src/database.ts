@@ -45,6 +45,13 @@ function updateDatabase() {
 }
 
 export function loadDatabase() {
+	// Create the gimhook config directory if it doesn't already exist
+
+	if (!fs.existsSync(gimhookDirectory)) {
+		log("info", `Creating ${gimhookDirectory}...`);
+		fs.mkdirSync(gimhookDirectory);
+	}
+
 	// Create the mod directory if it doesn't already exist
 
 	if (!fs.existsSync(gimhookModDirectory)) {
