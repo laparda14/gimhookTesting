@@ -7,6 +7,7 @@
 - [Using the Gimhook SDK](usage.md)
 - [Gimhook API](api.md)
 - [Gimhook hook types](hooks.md)
+- [Upgrading the Gimhook SDK](upgrading.md)
 
 ## What Gimhook is, and what it isn't
 
