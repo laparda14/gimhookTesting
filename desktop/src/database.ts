@@ -25,10 +25,18 @@ export function rebuildPreload() {
 
 	let modloader = fs.readFileSync(path.join(__dirname, "modloader.js"), "utf-8");
 
-	modloader += "if (gimhook._shouldLoadMods) {\n"
+	modloader += "if (gimhook._shouldLoadMods) {\nlet mod = null;\n"
 
 	database.enabledMods.forEach(modName => {
+		const metadata = {
+			name: modName,
+			options: {}
+		};
+
+		modloader += `mod = gimhook._createMod(${JSON.stringify(metadata)});\n`;
+
 		modloader += fs.readFileSync(path.join(gimhookModDirectory, `${modName}.js`), "utf-8");
+		modloader += "\n";
 	});
 
 	modloader += "}\n"

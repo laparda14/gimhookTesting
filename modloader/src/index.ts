@@ -6,6 +6,7 @@ import setupParcel from './parcel';
 import setupUI from './ui';
 import setupGame from './game';
 import setupGraphics from './graphics';
+import Mod from './mod';
 
 declare var gimhook: any;
 
@@ -36,7 +37,7 @@ if (navigator.userAgent.includes("gimhook")) {
 		}
 
 		location.href = url;
-	}
+	};
 
 	document.addEventListener("click", (e: any) => {
 		const link = e.target.closest("a");
@@ -52,19 +53,23 @@ if (navigator.userAgent.includes("gimhook")) {
 
 	gimhook._openModSelectionDialog = () => {
 		ipcRenderer.send("select-mods");
-	}
+	};
 
 	gimhook._removeMod = (name: string) => {
 		ipcRenderer.send("remove-mod", name);
-	}
+	};
 
 	gimhook._enableMod = (name: string) => {
 		ipcRenderer.send("enable-mod", name);
-	}
+	};
 
 	gimhook._disableMod = (name: string) => {
 		ipcRenderer.send("disable-mod", name);
-	}
+	};
+
+	gimhook._createMod = (metadata: any) => {
+		return new Mod(metadata);
+	};
 
 	ipcRenderer.on("install-status", (event: Event, status: boolean, name: string, message: string) => {
 		gimhook._onInstallStatus(status, name, message);

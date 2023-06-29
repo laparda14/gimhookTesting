@@ -93,3 +93,22 @@ declare var gimhook: {
 		};
 	};
 };
+
+/**
+* @namespace mod
+*/
+
+declare var mod: {
+	/**
+	* @property {string} name - The name of the current mod.
+	*/
+
+	name: string;
+
+	/**
+	* mod.getOption() returns an option for the current mod.
+	* @returns {string | number | undefined}
+	*/
+	
+	getOption(name: string): string | number | undefined;
+};
