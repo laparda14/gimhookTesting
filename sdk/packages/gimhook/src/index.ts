@@ -192,7 +192,7 @@ function main() {
 	let args = [];
 	let options = {};
 
-	// Basic argument parser, maybe in the future I should make this into a npm module
+	// Basic argument parser, maybe in the future I should make this into an npm module
 
 	for (let i = 0; i < _args.length; i++) {
 		const argument = _args[i];
