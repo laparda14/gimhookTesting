@@ -134,7 +134,17 @@ async function build(sourceDirectory, production, typecheck) {
 
 	// Otherwise, run the typescript compiler command
 
-	let command = spawn("tsc");
+	// On unix-like systems, running TypeScript is quite simple
+
+	let typescriptCommand = "tsc";
+
+	// However, on Windows we must do this awfulness
+
+	if (process.platform === "win32") {
+		typescriptCommand = "node_modules\\.bin\\tsc";
+	}
+
+	let command = process.platform === "win32" ? spawn("node", ["node_modules/typescript/lib/tsc.js"]) : spawn("tsc");
 	let output = "";
 
 	command.stdout.on("data", (data) => {
