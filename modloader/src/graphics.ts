@@ -70,6 +70,16 @@ function setupGraphics() {
 		phaserCheck();
 		gimhook.graphics.camera.getCamera().setZoom(zoom);
 	};
+
+	gimhook.graphics.coords.screenToGame = (screenX, screenY, playerX, playerY, width, height, zoom) => {
+	        var term = (screenX - (width/2))/width;
+	        var x = playerX + (width/2) * (term * (1/zoom) * 2);
+	
+	        var term = (screenY - (height/2))/height;
+	        var y = playerY + (height/2) * (term * (1/zoom) * 2);
+	
+		return [x, y];
+	};
 }
 
 export default setupGraphics;
